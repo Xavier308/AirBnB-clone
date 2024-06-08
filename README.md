@@ -36,6 +36,8 @@ This UML diagram should include all the entities discussed (Places, Users, Revie
 
 ![UML Diagram](/assets/UML_SIMPLE_DIAGRAM.png)
 
+
+
 ## Layered Architecture / n-tier Architecture of the APP
 
 This architectural style organizes the application into logical layers that separate responsibilities, which makes the application easier to manage, maintain, and scale.
@@ -94,17 +96,18 @@ AirBnB Clone/
 
 ### Components of Layered Architecture
 
-Presentation Layer (API endpoints): This is where the application handles all the user interface and browser communication logic. In a web application like yours, this layer is represented by the api/ directory, which contains the Flask routes that serve as the interface to the outside world.
+- Presentation Layer (API endpoints): This is where the application handles all the user interface and browser communication logic. In a web application like yours, this layer is represented by the api/ directory, which contains the Flask routes that serve as the interface to the outside world.
 
-Business Logic Layer (Services): This layer processes the application's business logic. It acts as a mediator between the presentation layer and the persistence layer, handling business rule validation, and makes logical decisions and evaluations. It's found in your services/ directory.
+- Business Logic Layer (Services): This layer processes the application's business logic. It acts as a mediator between the presentation layer and the persistence layer, handling business rule validation, and makes logical decisions and evaluations. It's found in your services/ directory.
 
-Persistence Layer (Data Persistence): This layer is responsible for storing and retrieving data from a database or any other storage system. Your project uses the persistence/ directory to manage data interactions, abstracting the details of data access away from the business logic layer.
+- Persistence Layer (Data Persistence): This layer is responsible for storing and retrieving data from a database or any other storage system. Your project uses the persistence/ directory to manage data interactions, abstracting the details of data access away from the business logic layer.
 
-Models: These are classes that represent the data structures and possibly the business rules of the application. They often map directly to database tables. In your project, this is managed under the models/ directory.
+- Models: These are classes that represent the data structures and possibly the business rules of the application. They often map directly to database tables. In your project, this is managed under the models/ directory.
 
-Utility Layer: This includes utilities and helper functions which are used across the application. In your project, these are stored in the utils/ directory.
+- Utility Layer: This includes utilities and helper functions which are used across the application. In your project, these are stored in the utils/ directory.
 
-Tests: This is where you maintain all unit and integration tests, ensuring that your application functions as expected. The tests/ directory in your structure plays this role.
+- Tests: This is where you maintain all unit and integration tests, ensuring that your application functions as expected. The tests/ directory in your structure plays this role.
+
 
 ### Additional Components
 Dockerfile: Helps in containerizing the application, making it portable and consistent across any deployment environment.
