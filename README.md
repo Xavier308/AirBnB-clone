@@ -1,8 +1,13 @@
 # This is a clone version of AirBnB using Python 3, flask, Docker
 
-## This app create user and manage their data, also it manage: places, cities, countries, ammenities and reviews.
+This App create user and manage their data, also it manage: places, cities, countries, ammenities and reviews.
 
-App implemented by Xavier J Cruz using documetantion provide by Holberton School
+![UML Diagram](/assets/rental_clone_app.webp)
+
+
+
+### App implemented by Xavier J Cruz using documetantion provide by Holberton School
+
 
 ## Dependencies & enviroment
 
