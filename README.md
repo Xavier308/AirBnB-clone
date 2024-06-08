@@ -1,7 +1,8 @@
-This is a clone version of AirBnB
+# This is a clone version of AirBnB using Python 3, flask, Docker
 
-This app create user and manage their data, also it manage: places, cities, countries, ammenities and reviews.
+## This app create user and manage their data, also it manage: places, cities, countries, ammenities and reviews.
 
+### App inplemented by Xavier J Cruz using documetantion provide by Holberton School
 
 It is recommendend to use a virtual enviroment to work with this project. You can create it with the following command:
 'python -m venv myenv'
@@ -16,18 +17,18 @@ It will create a file with all the dependencies you have.
 To install the dependecies necessary for the project
 you can use the command: 'pip install -r requirements.txt'
 
-#Consistency Across Environments
+## Consistency Across Environments
 
 To ensure consistency across different development environments and potentially in production, consider the following:
 
 Locking Dependencies: Tools like pipenv or Poetry can lock your project to specific versions of libraries to ensure that your project doesn’t accidentally get incompatible updates.
 Docker: For even greater consistency, especially when preparing for production, consider using Docker, which containers can replicate the exact software environment across different machines.
 
-# layered architecture / n-tier architecture of the APP
+## Layered Architecture / n-tier Architecture of the APP
 
 This architectural style organizes the application into logical layers that separate responsibilities, which makes the application easier to manage, maintain, and scale.
 
-'''c
+```bash
 AirBnB Clone/
 │
 ├── app/                       # Application package
@@ -77,9 +78,10 @@ AirBnB Clone/
 ├── Dockerfile                 # Dockerfile for containerizing the application
 ├── requirements.txt           # Project dependencies
 └── README.md                  # Project overview and setup instructions
-'''
+```
 
-Components of Layered Architecture
+### Components of Layered Architecture
+
 Presentation Layer (API endpoints): This is where the application handles all the user interface and browser communication logic. In a web application like yours, this layer is represented by the api/ directory, which contains the Flask routes that serve as the interface to the outside world.
 
 Business Logic Layer (Services): This layer processes the application's business logic. It acts as a mediator between the presentation layer and the persistence layer, handling business rule validation, and makes logical decisions and evaluations. It's found in your services/ directory.
@@ -92,11 +94,11 @@ Utility Layer: This includes utilities and helper functions which are used acros
 
 Tests: This is where you maintain all unit and integration tests, ensuring that your application functions as expected. The tests/ directory in your structure plays this role.
 
-Additional Components
+### Additional Components
 Dockerfile: Helps in containerizing the application, making it portable and consistent across any deployment environment.
 
 requirements.txt: Manages all project dependencies, ensuring that all necessary libraries are installed to run the application.
 
-README.md: Provides documentation on the project setup, configuration, and general overview, guiding new developers or users of the application.
+README.md: Documentation on the project setup, configuration, and general overview, guiding new developers or users of the application.
 
 This layered architecture helps in separating concerns, making the application easier to extend and maintain. It allows developers to work on one layer without the need to know every detail of other layers, provided the interfaces between layers are well-defined. This structure is widely used in complex applications that require scalability, maintainability, and flexibility.
