@@ -2,7 +2,7 @@
 
 ## This app create user and manage their data, also it manage: places, cities, countries, ammenities and reviews.
 
-App inplemented by Xavier J Cruz using documetantion provide by Holberton School
+App implemented by Xavier J Cruz using documetantion provide by Holberton School
 
 ## Dependencies & enviroment
 
@@ -113,6 +113,10 @@ AirBnB Clone/
 Dockerfile: Helps in containerizing the application, making it portable and consistent across any deployment environment.
 
 requirements.txt: Manages all project dependencies, ensuring that all necessary libraries are installed to run the application.
+
+### Pending more information and resources
+
+
 
 README.md: Documentation on the project setup, configuration, and general overview, guiding new developers or users of the application.
 
