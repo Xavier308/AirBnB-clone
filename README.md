@@ -48,7 +48,7 @@ This UML diagram should include all the entities discussed (Places, Users, Revie
 This architectural style organizes the application into logical layers that separate responsibilities, which makes the application easier to manage, maintain, and scale.
 
 ```bash
-AirBnB Clone/
+AirBnB-Clone/
 │
 ├── app/                       # Application package
 │   ├── __init__.py            # Initializes your application as a package
@@ -122,5 +122,10 @@ This layered architecture helps in separating concerns, making the application e
 
 - README.md: Documentation on the project setup, configuration, and general overview, guiding new developers or users of the application.
 
+## Integration of Flask-RESTx
+
+By integrating Flask-RESTx, you're reorganizing how routes and endpoints are handled, moving from Flask's Blueprint system to a more structured approach using namespaces and resources provided by Flask-RESTx. This setup provides benefits such as automatic API documentation and better organization for your API endpoints.
+
+Remember, each of your resource files (like user_routes.py, place_routes.py) will need to be adjusted to define Resource classes and add them to the respective Namespace. This approach modularizes your API and takes full advantage of Flask-RESTx’s features.
 
 ### Pending more information and resources
