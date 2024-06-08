@@ -6,7 +6,7 @@ This App create user and manage their data, also it manage: places, cities, coun
 
 
 
-### App implemented by Xavier J Cruz using documetantion provide by Holberton School
+## App implemented by Xavier J Cruz using documetantion provide by Holberton School
 
 
 ## Dependencies & enviroment
@@ -98,6 +98,7 @@ AirBnB Clone/
 ├── requirements.txt           # Project dependencies
 └── README.md                  # Project overview and setup instructions
 ```
+This layered architecture helps in separating concerns, making the application easier to extend and maintain. It allows developers to work on one layer without the need to know every detail of other layers, provided the interfaces between layers are well-defined. This structure is widely used in complex applications that require scalability, maintainability, and flexibility.
 
 ### Components of Layered Architecture
 
@@ -115,14 +116,11 @@ AirBnB Clone/
 
 
 ### Additional Components
-Dockerfile: Helps in containerizing the application, making it portable and consistent across any deployment environment.
+- Dockerfile: Helps in containerizing the application, making it portable and consistent across any deployment environment.
 
-requirements.txt: Manages all project dependencies, ensuring that all necessary libraries are installed to run the application.
+- requirements.txt: Manages all project dependencies, ensuring that all necessary libraries are installed to run the application.
+
+- README.md: Documentation on the project setup, configuration, and general overview, guiding new developers or users of the application.
+
 
 ### Pending more information and resources
-
-
-
-README.md: Documentation on the project setup, configuration, and general overview, guiding new developers or users of the application.
-
-This layered architecture helps in separating concerns, making the application easier to extend and maintain. It allows developers to work on one layer without the need to know every detail of other layers, provided the interfaces between layers are well-defined. This structure is widely used in complex applications that require scalability, maintainability, and flexibility.
