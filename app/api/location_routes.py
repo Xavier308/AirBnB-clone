@@ -1,50 +1,60 @@
-from flask import Blueprint, request, jsonify
+from flask_restx import Namespace, Resource
 from app.services.city_service import CityService
 from app.persistence.data_manager import DataManager
 
-location_routes = Blueprint('location_routes', __name__)
+api = Namespace('locations', description='Location operations')
 city_service = CityService(DataManager())
 
-@location_routes.route('/countries', methods=['GET'])
-def get_countries():
-    countries = [{'name': 'Country1', 'code': 'C1'}, {'name': 'Country2', 'code': 'C2'}]  # Example static data
-    return jsonify(countries), 200
+@api.route('/countries')
+class CountryList(Resource):
+    def get(self):
+        """Get a list of countries"""
+        countries = [{'name': 'Country1', 'code': 'C1'}, {'name': 'Country2', 'code': 'C2'}]  # Example static data
+        return countries, 200
 
-@location_routes.route('/countries/<country_code>/cities', methods=['GET'])
-def get_cities_by_country(country_code):
-    cities = city_service.get_all_cities()  # You would filter by country code in real implementation
-    return jsonify([city.to_dict() for city in cities]), 200
+@api.route('/countries/<country_code>/cities')
+@api.param('country_code', 'The ISO country code')
+class CityByCountry(Resource):
+    def get(self, country_code):
+        """Get cities by country code"""
+        cities = city_service.get_all_cities()  # You would filter by country code in real implementation
+        return [city.to_dict() for city in cities], 200
 
-@location_routes.route('/cities', methods=['POST'])
-def create_city():
-    data = request.get_json()
-    try:
-        city = city_service.create_city(data['name'], data['country_code'])
-        return jsonify(city.to_dict()), 201
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 400
+@api.route('/cities')
+class CityList(Resource):
+    def post(self):
+        """Create a new city"""
+        data = api.payload
+        try:
+            city = city_service.create_city(data['name'], data['country_code'])
+            return city.to_dict(), 201
+        except ValueError as e:
+            return {'error': str(e)}, 400
 
-@location_routes.route('/cities/<city_id>', methods=['GET'])
-def get_city(city_id):
-    try:
-        city = city_service.get_city(city_id)
-        return jsonify(city.to_dict()), 200
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 404
+@api.route('/cities/<city_id>')
+@api.param('city_id', 'The city identifier')
+class CityResource(Resource):
+    def get(self, city_id):
+        """Get a city by ID"""
+        try:
+            city = city_service.get_city(city_id)
+            return city.to_dict(), 200
+        except ValueError as e:
+            return {'error': str(e)}, 404
 
-@location_routes.route('/cities/<city_id>', methods=['PUT'])
-def update_city(city_id):
-    data = request.get_json()
-    try:
-        city = city_service.update_city(city_id, data['name'])
-        return jsonify(city.to_dict()), 200
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 400
+    def put(self, city_id):
+        """Update a city by ID"""
+        data = api.payload
+        try:
+            city = city_service.update_city(city_id, data['name'])
+            return city.to_dict(), 200
+        except ValueError as e:
+            return {'error': str(e)}, 400
 
-@location_routes.route('/cities/<city_id>', methods=['DELETE'])
-def delete_city(city_id):
-    try:
-        city_service.delete_city(city_id)
-        return '', 204
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 404
+    def delete(self, city_id):
+        """Delete a city by ID"""
+        try:
+            city_service.delete_city(city_id)
+            return '', 204
+        except ValueError as e:
+            return {'error': str(e)}, 404

@@ -1,45 +1,55 @@
-from flask import Blueprint, request, jsonify
+from flask_restx import Namespace, Resource
 from app.services.place_service import PlaceService
 from app.persistence.data_manager import DataManager
 
-place_routes = Blueprint('place_routes', __name__)
+api = Namespace('places', description='Place operations')
 place_service = PlaceService(DataManager())
 
-@place_routes.route('/places', methods=['POST'])
-def create_place():
-    data = request.get_json()
-    try:
-        place = place_service.create_place(**data)
-        return jsonify(place.to_dict()), 201
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 400
+@api.route('/')
+class PlaceList(Resource):
+    @api.doc('create_place')
+    def post(self):
+        """Create a new place"""
+        data = api.payload  # Use api.payload instead of request.get_json()
+        try:
+            place = place_service.create_place(**data)
+            return place.to_dict(), 201
+        except ValueError as e:
+            return {'error': str(e)}, 400
 
-@place_routes.route('/places', methods=['GET'])
-def get_places():
-    places = place_service.get_all_places()
-    return jsonify([place.to_dict() for place in places]), 200
+    @api.doc('get_places')
+    def get(self):
+        """Get all places"""
+        places = place_service.get_all_places()
+        return [place.to_dict() for place in places], 200
 
-@place_routes.route('/places/<place_id>', methods=['GET'])
-def get_place(place_id):
-    try:
-        place = place_service.get_place(place_id)
-        return jsonify(place.to_dict()), 200
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 404
+@api.route('/<place_id>')
+@api.param('place_id', 'The place identifier')
+class Place(Resource):
+    @api.doc('get_place')
+    def get(self, place_id):
+        """Get a place by ID"""
+        try:
+            place = place_service.get_place(place_id)
+            return place.to_dict(), 200
+        except ValueError as e:
+            return {'error': str(e)}, 404
 
-@place_routes.route('/places/<place_id>', methods=['PUT'])
-def update_place(place_id):
-    data = request.get_json()
-    try:
-        place = place_service.update_place(place_id, **data)
-        return jsonify(place.to_dict()), 200
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 400
+    @api.doc('update_place')
+    def put(self, place_id):
+        """Update a place by ID"""
+        data = api.payload
+        try:
+            place = place_service.update_place(place_id, **data)
+            return place.to_dict(), 200
+        except ValueError as e:
+            return {'error': str(e)}, 400
 
-@place_routes.route('/places/<place_id>', methods=['DELETE'])
-def delete_place(place_id):
-    try:
-        place_service.delete_place(place_id)
-        return '', 204
-    except ValueError as e:
-        return jsonify({'error': str(e)}), 404
+    @api.doc('delete_place')
+    def delete(self, place_id):
+        """Delete a place by ID"""
+        try:
+            place_service.delete_place(place_id)
+            return '', 204
+        except ValueError as e:
+            return {'error': str(e)}, 404
