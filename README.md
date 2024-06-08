@@ -2,7 +2,9 @@
 
 ## This app create user and manage their data, also it manage: places, cities, countries, ammenities and reviews.
 
-### App inplemented by Xavier J Cruz using documetantion provide by Holberton School
+App inplemented by Xavier J Cruz using documetantion provide by Holberton School
+
+## Dependencies & enviroment
 
 It is recommendend to use a virtual enviroment to work with this project. You can create it with the following command:
 'python -m venv myenv'
@@ -21,8 +23,14 @@ you can use the command: 'pip install -r requirements.txt'
 
 To ensure consistency across different development environments and potentially in production, consider the following:
 
-Locking Dependencies: Tools like pipenv or Poetry can lock your project to specific versions of libraries to ensure that your project doesn’t accidentally get incompatible updates.
+Locking Dependencies: 
+Tools like pipenv or Poetry can lock your project to specific versions of libraries to ensure that your project doesn’t accidentally get incompatible updates.
+
 Docker: For even greater consistency, especially when preparing for production, consider using Docker, which containers can replicate the exact software environment across different machines.
+
+## UML Diagram
+
+![Example Image](images/example.png)
 
 ## Layered Architecture / n-tier Architecture of the APP
 
