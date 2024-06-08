@@ -2,7 +2,7 @@
 
 This App create user and manage their data, also it manage: places, cities, countries, ammenities and reviews.
 
-![UML Diagram](/assets/rental_clone_app.webp)
+![UML Diagram](/assets/rental_clone_app2.webp)
 
 
 
