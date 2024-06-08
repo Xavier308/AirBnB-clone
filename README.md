@@ -28,9 +28,13 @@ Tools like pipenv or Poetry can lock your project to specific versions of librar
 
 Docker: For even greater consistency, especially when preparing for production, consider using Docker, which containers can replicate the exact software environment across different machines.
 
-## UML Diagram
+## UML SIMPLE Diagram
 
-![UML Diagram](AirBnB-clone/assets/Screenshot_2024-06-04_5.44.11_PM.png)
+The first path was to create  a Unified Modeling Language (UML) design. This task is all about planning and visualizing the structure of our system before diving into coding.
+
+This UML diagram should include all the entities discussed (Places, Users, Reviews, Amenities, Country, City) and their relationships. 
+
+![UML Diagram](/assets/UML_SIMPLE_DIAGRAM.png)
 
 ## Layered Architecture / n-tier Architecture of the APP
 
