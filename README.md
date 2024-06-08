@@ -30,7 +30,7 @@ Docker: For even greater consistency, especially when preparing for production, 
 
 ## UML Diagram
 
-![Example Image](images/example.png)
+![UML Diagram](AirBnB-clone/assets/Screenshot_2024-06-04_5.44.11_PM.png)
 
 ## Layered Architecture / n-tier Architecture of the APP
 
