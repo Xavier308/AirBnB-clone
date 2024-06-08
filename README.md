@@ -3,7 +3,7 @@ This is a clone version of AirBnB
 This app create user and manage their data, also it manage: places, cities, countries, ammenities and reviews.
 
 
-It is recommendend to use a virtual enviroment to work with this project. You cab create ine with the following command:
+It is recommendend to use a virtual enviroment to work with this project. You can create it with the following command:
 'python -m venv myenv'
 
 
@@ -27,6 +27,7 @@ Docker: For even greater consistency, especially when preparing for production, 
 
 This architectural style organizes the application into logical layers that separate responsibilities, which makes the application easier to manage, maintain, and scale.
 
+'''c
 AirBnB Clone/
 │
 ├── app/                       # Application package
@@ -76,6 +77,7 @@ AirBnB Clone/
 ├── Dockerfile                 # Dockerfile for containerizing the application
 ├── requirements.txt           # Project dependencies
 └── README.md                  # Project overview and setup instructions
+'''
 
 Components of Layered Architecture
 Presentation Layer (API endpoints): This is where the application handles all the user interface and browser communication logic. In a web application like yours, this layer is represented by the api/ directory, which contains the Flask routes that serve as the interface to the outside world.
