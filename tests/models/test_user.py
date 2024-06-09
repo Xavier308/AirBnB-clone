@@ -1,6 +1,6 @@
 import unittest
 from app.models.user import User
-from app.models.place import Place  # Asegúrate de importar Place también
+from app.models.place import Place
 
 class TestUser(unittest.TestCase):
     def test_user_creation(self):
