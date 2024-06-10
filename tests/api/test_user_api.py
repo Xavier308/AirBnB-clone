@@ -1,0 +1,55 @@
+import pytest
+from flask import Flask
+from flask_restx import Api
+from app.api.user_routes import api as user_api
+from app.persistence.data_manager import DataManager
+from app.models.user import User
+from unittest.mock import MagicMock
+
+@pytest.fixture
+def client():
+    app = Flask(__name__)
+    app.config['TESTING'] = True
+    api = Api(app)  # Create an Api instance
+    api.add_namespace(user_api, path='/users')  # Register the namespace with the Api instance
+    with app.test_client() as client:
+        yield client
+
+@pytest.fixture
+def mock_data_manager():
+    mock = MagicMock(spec=DataManager)
+    return mock
+
+@pytest.fixture
+def user_service(mock_data_manager):
+    from app.services.user_service import UserService
+    return UserService(mock_data_manager)
+
+def test_list_users(client, user_service):
+    mock_user = User(email="test@example.com", first_name="John", last_name="Doe", password="password")
+    user_service.get_all_users = MagicMock(return_value=[mock_user])
+    
+    response = client.get('/users/')
+    assert response.status_code == 200
+    assert response.json == [{
+        "user_id": mock_user.user_id,
+        "email": "test@example.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "created_at": mock_user.created_at.isoformat(),
+        "updated_at": mock_user.updated_at.isoformat(),
+        "places": []
+    }]
+
+def test_create_user(client, user_service):
+    user_data = {"email": "newuser@example.com", "first_name": "New", "last_name": "User"}
+    user_service.create_user = MagicMock(return_value=User(**user_data, password="pass"))
+    
+    response = client.post('/users/', json=user_data)
+    assert response.status_code == 201
+    assert response.json['email'] == "newuser@example.com"
+    
+    user_service.create_user.side_effect = ValueError("Invalid email format")
+    response = client.post('/users/', json=user_data)
+    assert response.status_code == 400
+    assert response.json == {"error": "Invalid email format"}
