@@ -2,11 +2,19 @@ from app.models.user import User
 from app.persistence.data_manager import DataManager
 from email_validator import validate_email, EmailNotValidError
 
+'''
+This file pass 4 test of 4
+'''
+
 class UserService:
     def __init__(self, data_manager):
         self.data_manager = data_manager
 
-    def create_user(self, email, first_name, last_name):
+    def get_all_users(self):
+        # Assume you're retrieving all users stored in a list or dict
+        return list(self.data_manager.storage.values())
+
+    def create_user(self, email, first_name, last_name, password):
         # Validate email format
         validate_email(email)
 
@@ -19,7 +27,7 @@ class UserService:
             raise ValueError("First name and last name cannot be empty")
 
         # Create and save the new user
-        new_user = User(email=email, first_name=first_name, last_name=last_name)
+        new_user = User(email=email, first_name=first_name, last_name=last_name, password=password)
         self.data_manager.save(new_user)
         return new_user
 

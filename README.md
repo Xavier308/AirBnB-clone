@@ -82,6 +82,11 @@ This project was built using Debian GNU/Linux 12 (bookworm). All necessary depen
 ```bash
 pip install -r requirements.txt
 ```
+To know wich dependencies you have in your project use
+the command and create a file with all the dependencies you have: 
+```bash
+pip freeze > requirements.txt
+```
 
 ## Consistency Across Environments
 To ensure consistency across various development environments and in preparation for production, consider:

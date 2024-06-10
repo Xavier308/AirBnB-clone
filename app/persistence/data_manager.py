@@ -1,4 +1,4 @@
-from interface import IPersistenceManager
+from .interface import IPersistenceManager
 
 
 class DataManager(IPersistenceManager):
