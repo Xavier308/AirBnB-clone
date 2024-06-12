@@ -1,12 +1,12 @@
 from app.models.place import Place
 from app.persistence.data_manager import DataManager
-from app.models.city import City # check this
+from app.models.city import City # check this later
 
 class PlaceService:
     def __init__(self, data_manager):
         self.data_manager = data_manager
-
-    def create_place(self, name, description, address, city_id, latitude, longitude, host_id, rooms, bathrooms, price, max_guests, amenities):
+    # comment
+    def create_place(self, name, description, address, city_id, latitude, longitude, host_id, rooms, bathrooms, price_per_night, max_guests, amenities):
         # Validations (simplified for brevity)
         if self.data_manager.get(city_id, City) is None:
             raise ValueError("City does not exist.")
@@ -15,7 +15,7 @@ class PlaceService:
 
         place = Place(name=name, description=description, address=address, city_id=city_id, 
                       latitude=latitude, longitude=longitude, host_id=host_id, rooms=rooms, 
-                      bathrooms=bathrooms, price_per_night=price, max_guests=max_guests, amenities=amenities)
+                      bathrooms=bathrooms, price_per_night=price_per_night, max_guests=max_guests, amenities=amenities)
         self.data_manager.save(place)
         return place
 
