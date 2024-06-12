@@ -256,6 +256,7 @@ class ExampleResource(Resource):
 ```
 
 ## Command to initialize APP
+
 ```bash
 python3 -m app.app
 ```
