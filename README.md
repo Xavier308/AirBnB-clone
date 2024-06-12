@@ -260,3 +260,10 @@ class ExampleResource(Resource):
 ```bash
 python3 -m app.app
 ```
+
+## Command to run tests
+Make sure you are in the route directorie of the project
+
+```bash
+python -m pytest tests/services/test_name.py
+```
