@@ -5,10 +5,10 @@ class CityService:
     def __init__(self, data_manager):
         self.data_manager = data_manager
 
-    def create_city(self, name, country_code):
-        if self.data_manager.get(city_name=name, CountryCode=country_code):
+    def create_city(self, name, country):
+        if self.data_manager.get(city_name=name, country=country):
             raise ValueError("City with this name already exists in the specified country.")
-        city = City(name=name, country_code=country_code)
+        city = City(name=name, country=country)
         self.data_manager.save(city)
         return city
 

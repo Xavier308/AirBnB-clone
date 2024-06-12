@@ -8,3 +8,9 @@ class City:
         self.country = country  # This should be a Country object
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+
+    def __eq__(self, other):
+        if not isinstance(other, City):
+            return NotImplemented
+        return (self.name == other.name and
+                self.country == other.country)
