@@ -254,3 +254,8 @@ class ExampleResource(Resource):
     def get(self):
         return "Example data"
 ```
+
+## Command to initialize APP
+```bash
+python3 -m app.app
+```

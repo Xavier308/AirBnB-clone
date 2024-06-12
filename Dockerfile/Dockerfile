@@ -11,10 +11,11 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Make port available to the world outside this container
-EXPOSE $PORT
+EXPOSE 8000
 
 # Define environment variable for Gunicorn to listen on a specific port
 ENV PORT=8000
 
-# Run gunicorn with one worker on the specified port
-CMD ["gunicorn", "--workers=1", "--bind", "0.0.0.0:$PORT", "your_application:app"]
+# Use ENTRYPOINT to specify the executable and CMD to specify the parameters
+ENTRYPOINT ["gunicorn", "--workers=1"]
+CMD ["--bind", "0.0.0.0:8000", "app.app:create_app()"]
