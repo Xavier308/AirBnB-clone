@@ -1,6 +1,6 @@
 from app.models.place import Place
 from app.persistence.data_manager import DataManager
-from app.models.city import City # check this later
+from app.models.city import City
 
 class PlaceService:
     def __init__(self, data_manager):
