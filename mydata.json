@@ -1,0 +1,24 @@
+{
+    "User": {
+        "11a66909-82f8-4895-b5c3-d1249addc9fe": {
+            "user_id": "11a66909-82f8-4895-b5c3-d1249addc9fe",
+            "email": "newuser@gmail.com",
+            "password": "1234",
+            "first_name": "New",
+            "last_name": "User",
+            "created_at": "2024-06-13T10:03:04.002187",
+            "updated_at": "2024-06-13T10:03:04.002204",
+            "places": []
+        },
+        "0b1154bb-0949-4c5f-83e8-168e541097c6": {
+            "user_id": "0b1154bb-0949-4c5f-83e8-168e541097c6",
+            "email": "xavier@gmail.com",
+            "password": "Super1234",
+            "first_name": "Xavier",
+            "last_name": "Cruz",
+            "created_at": "2024-06-13T10:08:15.595461",
+            "updated_at": "2024-06-13T10:08:15.595478",
+            "places": []
+        }
+    }
+}

@@ -14,3 +14,16 @@ class User:
 
     def add_place(self, place):
         self.places.append(place)
+
+    # Added to resolve problem in live testing API - **pending...
+    def to_dict(self):
+        return {
+            'user_id': self.user_id,
+            'email': self.email,
+            'password': self.password,  # You might want to hash the password before saving
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat(),
+            'places': [place.to_dict() for place in self.places]  # Assuming Place has a to_dict method
+        }

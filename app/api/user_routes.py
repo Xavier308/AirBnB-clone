@@ -22,12 +22,13 @@ class UserList(Resource):
     def post(self):
         """Create a new user"""
         data = api.payload
-        required_fields = ['email', 'first_name', 'last_name']
+        required_fields = ['email', 'first_name', 'last_name', 'password']  # Include 'password' in the required fields
         if not all(field in data for field in required_fields):
             return {"error": "Missing required field"}, 400
 
         try:
-            user = user_service.create_user(data['email'], data['first_name'], data['last_name'])
+            # Now include 'password' when calling create_user
+            user = user_service.create_user(data['email'], data['first_name'], data['last_name'], data['password'])
             return user.to_dict(), 201
         except EmailNotValidError as e:
             return {"error": str(e)}, 400

@@ -9,7 +9,8 @@ class IPersistenceManager(ABC):
         pass
 
     @abstractmethod
-    def get(self, entity_id, entity_type):
+    # def get(self, entity_id, entity_type):
+    def get(self, entity_id, entity_class):
         """Retrieve an entity by ID and type from storage."""
         pass
 

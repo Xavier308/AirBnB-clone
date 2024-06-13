@@ -17,22 +17,21 @@ class DataManager(IPersistenceManager):
         with open(self.filename, 'w') as file:
             json.dump(self.storage, file, indent=4)
 
+    # This "entity_id = entity.id" was changed to resolve problem
     def save(self, entity):
         entity_type = type(entity).__name__
-        entity_id = entity.id
+        entity_id = entity.user_id  # Use user_id instead of id
         if entity_type not in self.storage:
             self.storage[entity_type] = {}
-        self.storage[entity_type][entity_id] = entity.to_dict()  # Adjusted to use a new method
+        self.storage[entity_type][entity_id] = entity.to_dict()
         self.save_to_file()
-
 
     def get(self, entity_id, entity_class):
         entity_type = entity_class.__name__
-        entity_data = self.storage.get(entity_type, {}).get(str(entity_id), None)  # Ensure the ID is string
+        entity_data = self.storage.get(entity_type, {}).get(str(entity_id), None)
         if entity_data:
-            return entity_class(**entity_data)  # Adjust to match the constructor parameters
+            return entity_class(**entity_data)
         return None
-
 
     def update(self, entity):
         self.save(entity)  # Reuse save method since it handles replacing existing data
