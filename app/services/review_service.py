@@ -8,26 +8,28 @@ class ReviewService:
     def __init__(self, data_manager):
         self.data_manager = data_manager
 
-    def create_review(self, place_id, user_id, rating, comment):
-        # Validation for user and place existence and rating within bounds
-        if not self.data_manager.get(user_id, User):
+    def create_review(self, place_id, user_id, rating, text):  # Changed 'comment' to 'text'
+        user = self.data_manager.get(user_id, User)
+        place = self.data_manager.get(place_id, Place)
+        if not user:
             raise ValueError("User not found.")
-        if not self.data_manager.get(place_id, Place):
+        if not place:
             raise ValueError("Place not found.")
         if not (1 <= rating <= 5):
             raise ValueError("Rating must be between 1 and 5.")
-        
-        review = Review(place_id=place_id, user_id=user_id, rating=rating, comment=comment)
+    
+        review = Review(user=user, place=place, text=text, rating=rating)  # Now both use 'text'
         self.data_manager.save(review)
         return review
 
-    def update_review(self, review_id, rating, comment):
+
+    def update_review(self, review_id, rating, text):
         review = self.data_manager.get(review_id, Review)
         if not review:
             raise ValueError("Review not found.")
         
         review.rating = rating
-        review.comment = comment
+        review.text = text  # Ensure this is the attribute being updated
         self.data_manager.update(review)
         return review
 

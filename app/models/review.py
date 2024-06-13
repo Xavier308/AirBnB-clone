@@ -13,3 +13,11 @@ class Review:
         
         # Automatically add this review to the place's list of reviews
         place.reviews.append(self)
+
+    def __eq__(self, other):
+        if not isinstance(other, Review):
+            return NotImplemented
+        return (self.user == other.user and
+                self.place == other.place and
+                self.text == other.text and
+                self.rating == other.rating)
