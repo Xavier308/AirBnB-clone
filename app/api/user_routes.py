@@ -16,7 +16,8 @@ class UserList(Resource):
     def get(self):
         """List all users"""
         users = user_service.get_all_users()
-        return [user.to_dict() for user in users], 200
+        return users, 200  # Directly return the list of dictionaries
+        # return [user.to_dict() for user in users], 200
 
     @api.doc('create_user')
     def post(self):
