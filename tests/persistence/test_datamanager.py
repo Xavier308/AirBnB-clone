@@ -1,59 +1,66 @@
 import pytest
-from app.persistence.data_manager import DataManager  # Adjust the import according to your project structure
-
-'''
-This code passed 5 test:
-1- Initializing its storage dictionary.
-2 -Saving entities based on their type and ID.
-3- It is accurately retrieving entities when they exist and correctly returning None when they don't.
-4- It successfully updates existing entities and retains the changes.
-5- It properly deletes entities from the storage and ensures they cannot be retrieved afterwards.
-
-Additional test to consider:
-attempt to update or delete an entity that does not exist
-
-'''
+import json
+import tempfile
+from app.persistence.data_manager import DataManager
 
 
-# Assuming a simple User class for testing purposes
 class User:
     def __init__(self, user_id, email):
         self.id = user_id
         self.email = email
 
+    def to_dict(self):
+        return {
+            'user_id': self.id,  # Ensure the key matches the constructor argument name
+            'email': self.email
+        }
+
 @pytest.fixture
-def data_manager():
-    """Fixture to create a DataManager instance for each test."""
-    return DataManager()
+def user():
+    return User(user_id="1", email="user@example.com")
+
+@pytest.fixture
+def temp_file():
+    with tempfile.NamedTemporaryFile(delete=False) as tmpfile:
+        yield tmpfile.name  # Provide the filename to use in the test
+
+@pytest.fixture
+def data_manager(temp_file):
+    """Fixture to create a DataManager instance with a temporary file."""
+    return DataManager(filename=temp_file)
 
 def test_data_manager_initialization(data_manager):
-    assert isinstance(data_manager.storage, dict), "Storage should be initialized as a dictionary"
-    assert data_manager.storage == {}, "Storage should be empty on initialization"
+    assert isinstance(data_manager.load_data(), dict), "Should load data as a dictionary"
 
-def test_save_entity(data_manager):
-    user = User(user_id=1, email='test@example.com')
+# Assuming that you're updating the User constructor and its uses accordingly:
+def test_save_and_get_entity(data_manager, temp_file):
+    user = User(user_id="1", email='test@example.com')
     data_manager.save(user)
-    assert 'User' in data_manager.storage, "User type should be a key in the storage dictionary"
-    assert data_manager.storage['User'][1] == user, "User should be saved under its ID"
-
-def test_get_entity(data_manager):
-    user = User(user_id=1, email='test@example.com')
-    data_manager.save(user)
-    retrieved_user = data_manager.get(1, 'User')
-    assert retrieved_user == user, "Should retrieve the correct user"
-    assert data_manager.get(2, 'User') is None, "Should return None for a non-existent ID"
-    assert data_manager.get(1, 'NonExistentType') is None, "Should return None for a non-existent type"
+    # Ensure data is saved to file
+    with open(temp_file, 'r') as file:
+        data = json.load(file)
+    assert str(user.id) in data['User'], "User should be saved in the file under its ID"
+    
+    retrieved_user = data_manager.get(user.id, User)
+    assert retrieved_user.email == user.email, "Should retrieve the user with correct email"
 
 def test_update_entity(data_manager):
-    user = User(user_id=1, email='original@example.com')
+    user = User(user_id="1", email='original@example.com')
     data_manager.save(user)
-    updated_user = User(user_id=1, email='updated@example.com')
-    data_manager.update(updated_user)
-    assert data_manager.storage['User'][1].email == 'updated@example.com', "Email should be updated in storage"
+    user.email = 'updated@example.com'
+    data_manager.update(user)
+    
+    updated_user = data_manager.get(user.id, User)
+    assert updated_user.email == 'updated@example.com', "Email should be updated in the storage"
 
 def test_delete_entity(data_manager):
     user = User(user_id=1, email='test@example.com')
     data_manager.save(user)
-    data_manager.delete(1, 'User')
-    assert 1 not in data_manager.storage['User'], "User should be deleted from storage"
-    assert data_manager.get(1, 'User') is None, "Deleted user should not be retrievable"
+    data_manager.delete(user.id, User)
+    
+    assert data_manager.get(user.id, User) is None, "Deleted user should not be retrievable"
+
+# Additional test for file-based scenario
+def test_non_existent_file_load():
+    manager = DataManager(filename='nonexistent.json')
+    assert manager.load_data() == {}, "Should return an empty dictionary for a nonexistent file"

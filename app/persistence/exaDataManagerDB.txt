@@ -1,0 +1,34 @@
+# This is an example of a data manager connected to a relational data base
+
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from .interface import IPersistenceManager
+from .models import Base, User, Place  # Assuming your models are defined with SQLAlchemy
+
+class DataManager(IPersistenceManager):
+    def __init__(self, database_url='sqlite:///hbnevolution.db'):
+        self.engine = create_engine(database_url)
+        Base.metadata.create_all(self.engine)  # Create tables based on Base metadata
+        Session = sessionmaker(bind=self.engine)
+        self.session = Session()
+
+    def save(self, entity):
+        self.session.add(entity)
+        self.session.commit()
+
+    def get(self, entity_id, entity_class):
+        return self.session.query(entity_class).get(entity_id)
+
+    def update(self, entity):
+        if self.session.dirty:
+            self.session.commit()
+
+    def delete(self, entity_id, entity_class):
+        entity = self.session.query(entity_class).get(entity_id)
+        if entity:
+            self.session.delete(entity)
+            self.session.commit()
+
+    def close(self):
+        self.session.close()
