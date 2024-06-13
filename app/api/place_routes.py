@@ -10,7 +10,14 @@ class PlaceList(Resource):
     @api.doc('create_place')
     def post(self):
         """Create a new place"""
-        data = api.payload  # Use api.payload instead of request.get_json()
+        data = api.payload
+        required_fields = ['name', 'description', 'address', 'city_id', 'latitude', 'longitude', 'host_id', 
+                           'rooms', 'bathrooms', 'price_per_night', 'max_guests', 'amenities']
+        
+        if not all(field in data for field in required_fields):
+            missing_fields = [field for field in required_fields if field not in data]
+            return {'error': f'Missing required fields: {", ".join(missing_fields)}'}, 400
+
         try:
             place = place_service.create_place(**data)
             return place.to_dict(), 201
