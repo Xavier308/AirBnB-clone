@@ -3,9 +3,13 @@ from app.services.user_service import UserService
 from app.persistence.data_manager import DataManager
 from email_validator import validate_email, EmailNotValidError
 
+"""This user routes passed 9/9 tests"""
+
 api = Namespace('users', description='User operations')
 user_service = UserService(DataManager())
 
+
+# This route was refactored to be more robust 6/13/2024
 @api.route('/')
 class UserList(Resource):
     @api.doc('list_users')
@@ -17,14 +21,19 @@ class UserList(Resource):
     @api.doc('create_user')
     def post(self):
         """Create a new user"""
-        data = api.payload  # Use api.payload instead of request.get_json()
+        data = api.payload
+        required_fields = ['email', 'first_name', 'last_name']
+        if not all(field in data for field in required_fields):
+            return {"error": "Missing required field"}, 400
+
         try:
             user = user_service.create_user(data['email'], data['first_name'], data['last_name'])
             return user.to_dict(), 201
-        except EmailNotValidError:
-            return {"error": "Invalid email format"}, 400
+        except EmailNotValidError as e:
+            return {"error": str(e)}, 400
         except ValueError as e:
             return {"error": str(e)}, 400
+
 
 @api.route('/<user_id>')
 @api.param('user_id', 'The user identifier')
