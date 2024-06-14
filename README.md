@@ -122,7 +122,7 @@ This project utilizes a layered (n-tier) architecture to separate responsibiliti
 ### Directory Structure Overview:
 
 ```bash
-airbnb_clone/
+HBnB/
 ├── app/                        # Main application codebase
 │   ├── api/                    # API endpoints handling client-server interactions
 │   │   ├── amenity_routes.py   # Routes for amenity-related operations
