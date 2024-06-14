@@ -1,24 +1,32 @@
 from flask_restx import Namespace, Resource
 from app.services.city_service import CityService
+from app.services.country_service import CountryService
 from app.persistence.data_manager import DataManager
 
 api = Namespace('locations', description='Location operations')
-city_service = CityService(DataManager())
+
+# Initialize both services with DataManager
+data_manager = DataManager()
+city_service = CityService(data_manager)
+country_service = CountryService(data_manager)
+
 
 @api.route('/countries')
 class CountryList(Resource):
     def get(self):
-        """Get a list of countries"""
-        countries = [{'name': 'Country1', 'code': 'C1'}, {'name': 'Country2', 'code': 'C2'}]  # Example static data
-        return countries, 200
+        """Get a list of all countries."""
+        countries = country_service.get_all_countries()
+        return [country.to_dict() for country in countries], 200
 
 @api.route('/countries/<country_code>/cities')
 @api.param('country_code', 'The ISO country code')
 class CityByCountry(Resource):
     def get(self, country_code):
-        """Get cities by country code"""
-        cities = city_service.get_all_cities()  # You would filter by country code in real implementation
-        return [city.to_dict() for city in cities], 200
+        """Get cities by country code."""
+        country = country_service.get_country(country_code)
+        if not country:
+            return {'error': 'Country not found'}, 404
+        return [city.to_dict() for city in country.cities], 200
 
 @api.route('/cities')
 class CityList(Resource):
