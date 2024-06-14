@@ -74,16 +74,16 @@ Instructions for setting up and installing the project will be provided, ensurin
 
 ```bash
 # Clone the repository
-git clone git@github.com:Xavier308/AirBnB-clone.git
+git clone git@github.com:Xavier308/holbertonschool-hbnb.git
 
 # Navigate to the project directory
-cd airbnb-clone
+cd hbnb-clone
 
 # Build the Docker container
-docker build -t airbnb-clone .
+docker build -t hbnb-clone .
 
 # Run the container
-docker run -p airbnb-clone
+docker run -p hbnb-clone
 
 ```
 
@@ -277,7 +277,7 @@ class ExampleResource(Resource):
 ### Command to initialize APP
 
 ```bash
-python3 -m app.app
+python3 -m app.your_app
 ```
 
 ## Command to run tests
@@ -304,7 +304,7 @@ docker images
 ```
 
 ```bash
-docker images | grep airbnb_clone
+docker images | grep your_app
 ```
 
 ### Run Container:
