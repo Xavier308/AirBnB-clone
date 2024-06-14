@@ -3,13 +3,14 @@ from app.services.city_service import CityService
 from app.services.country_service import CountryService
 from app.persistence.data_manager import DataManager
 
-api = Namespace('locations', description='Location operations')
+api = Namespace('city_country', description='City and Country Operations')
 
 # Initialize both services with DataManager
 data_manager = DataManager()
-city_service = CityService(data_manager)
-country_service = CountryService(data_manager)
 
+country_service = CountryService(data_manager)
+# Initialize CityService with both DataManager and CountryService
+city_service = CityService(data_manager, country_service)
 
 @api.route('/countries')
 class CountryList(Resource):

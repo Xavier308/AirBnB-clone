@@ -11,13 +11,13 @@ def create_app():
     # Absolute imports
     from app.api.user_routes import api as users_ns
     from app.api.place_routes import api as places_ns
-    from app.api.location_routes import api as locations_ns
+    from app.api.city_country_routes import api as city_country_ns
     from app.api.amenity_routes import api as amenities_ns
     from app.api.review_routes import api as reviews_ns
 
     api.add_namespace(users_ns)
     api.add_namespace(places_ns)
-    api.add_namespace(locations_ns)
+    api.add_namespace(city_country_ns)
     api.add_namespace(amenities_ns)
     api.add_namespace(reviews_ns)
 
