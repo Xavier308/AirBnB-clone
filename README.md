@@ -1,14 +1,30 @@
-# AirBnB-Clone Project: Part 1 Guide
+# HBnB Project: Part 1
+AirBnB clone version Holberton School
+## Table of Contents
 
+- [Introduction](#introduction)
+- [Contributing](#contributing)
+- [What’s in Part 1?](#key-activities)
+- [Project structure](#project-structure)
+- [Setup and Installation](#setup-and-installation)
+- [Dependencies & Environment Setup](#dependencies--environment-setup)
+- [UML Diagram Overview](#uml-diagram-overview)
+- [Layered Architecture](#layered-architecture)
+- [Integration of Flask-RESTx](#integration-of-flask-restx)
+- [Command for initialize App and Pytest](#command-for-initialize-app-and-pytest)
+- [Resources](#resources)
+
+## Introduction
 Welcome to the HBnB Evolution Project, a clone of AirBnB's API crafted using Python 3, Flask, and Docker. This application enables the creation and management of data concerning users, places, cities, countries, amenities, and reviews. The initial phase focuses on developing the API modules and business logic essential for future integrations with SQL databases and front-end technologies.
 
-![UML Diagram](/assets/rental_clone_app2.webp)
+![App Image](/assets/rental_clone_app2.webp)
 
 
-## Implemented by Xavier J Cruz
+## Contributing 
+- **Xavier J Cruz**
 Documentation provided by Holberton School.
 
-# What’s Cooking in Part 1?
+# What’s in Part 1?
 
 ## Key Activities
 
@@ -31,24 +47,24 @@ The project is structured into three primary layers:
 ### Persistence Layer
 - Currently a file system, to be migrated to a database.
 
-## Key Entities
+### Key Entities
 
 - **Places**: Core to our application, representing properties available for booking.
 - **Users**: Can be hosts or reviewers, interacting with places.
 - **Reviews and Amenities**: Feedback and features of places.
 - **Country and City**: Geographic categorization of places.
 
-## Business Logic
+### Business Logic
 
 - **Unique Identifiers**: Using UUID4 for ensuring each entity is unique.
 - **Creation and Update Timestamps**: For traceability.
 
-## Technologies Used
+### Technologies Used
 
-- Python
-- Flask & Flask-RESTx
-- Docker
-- JSON/XML for file storage
+- **Python**
+- **Flask & Flask-RESTx**
+- **Docker**
+- **JSON/XML for file storage**
 
 ## Setup and Installation
 
@@ -88,7 +104,7 @@ the command and create a file with all the dependencies you have:
 pip freeze > requirements.txt
 ```
 
-## Consistency Across Environments
+### Consistency Across Environments
 To ensure consistency across various development environments and in preparation for production, consider:
 
 - Locking Dependencies: Use tools like pipenv or Poetry to lock your project to specific library versions, preventing incompatible updates.
@@ -99,6 +115,7 @@ To ensure consistency across various development environments and in preparation
 The project began with designing a Unified Modeling Language (UML) diagram to plan and visualize the system's structure before coding.
 
 ![UML Diagram](/assets/UML_SIMPLE_DIAGRAM.png)
+-[UML Diagram - Lucid tool](https://lucid.app/lucidchart/4e919969-a00b-4245-bc63-417ab657d881/edit?viewport_loc=-1712%2C-924%2C2977%2C1415%2C0_0&invitationId=inv_3d45a7c7-3c8e-48ca-9af6-0359584ea99e)
 
 ## Layered Architecture
 This project utilizes a layered (n-tier) architecture to separate responsibilities, which simplifies management, maintenance, and scalability.
@@ -254,8 +271,8 @@ class ExampleResource(Resource):
     def get(self):
         return "Example data"
 ```
-
-## Command to initialize APP
+## Command for initialize App and Pytest
+### Command to initialize APP
 
 ```bash
 python3 -m app.app
@@ -267,3 +284,17 @@ Make sure you are in the route directorie of the project
 ```bash
 python -m pytest tests/services/test_name.py
 ```
+
+## Resources
+
+- [Concept Page: OOP - Introduction to UML](https://intranet.hbtn.io/concepts/1166)
+- [UML Class Diagram Tutorial](https://www.lucidchart.com/pages/uml-class-diagram)
+- [Python Documentation](https://docs.python.org/3/)
+- [Unit Testing in Python](https://docs.pytest.org/en/8.2.x/)
+- [PyTest testing tool](https://docs.python.org/3/library/unittest.html)
+- [ISO 3166-1](https://www.iso.org/iso-3166-country-codes.html)
+- [Docker Official Documentation](https://docs.docker.com/)
+- [Gunicorn Configuration](https://docs.gunicorn.org/en/stable/configure.html)
+- [Alpine Linux Documentation](https://wiki.alpinelinux.org/wiki/Main_Page)
+- [Docker Volumes](https://docs.docker.com/storage/)
+- [Dockerfile Best Practices](https://docs.docker.com/build/building/best-practices/)
