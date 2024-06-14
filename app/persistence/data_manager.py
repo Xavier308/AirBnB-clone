@@ -1,6 +1,13 @@
 import json
 import os
 from .interface import IPersistenceManager
+from app.models.user import User
+from app.models.city import City
+from app.models.country import Country
+from app.models.amenity import Amenity
+from app.models.review import Review
+from app.models.place import Place
+
 
 class DataManager(IPersistenceManager):
     def __init__(self):
@@ -12,10 +19,17 @@ class DataManager(IPersistenceManager):
             'Review': 'reviewdata.json',
             'Place': 'placedata.json'
         }
+        self.entity_classes = {
+            'User': User,
+            'City': City,
+            'Country': Country,
+            'Amenity': Amenity,
+            'Review': Review,
+            'Place': Place
+        }
         self.storages = {key: self.load_data(key) for key in self.files}
 
     def load_data(self, entity_type):
-        """Load data from a JSON file corresponding to the entity type."""
         file_path = self.files[entity_type]
         if not os.path.exists(file_path):
             with open(file_path, 'w') as file:
@@ -34,18 +48,19 @@ class DataManager(IPersistenceManager):
 
     def save(self, entity):
         entity_type = type(entity).__name__
-        entity_id = entity.user_id  # Assume all entities have user_id
+        entity_id = entity.user_id
         if entity_type not in self.storages:
             self.storages[entity_type] = {}
         self.storages[entity_type][entity_id] = entity.to_dict()
         self.save_to_file(entity_type)
 
     def get(self, entity_id, entity_type):
-        """Retrieve a single entity by ID."""
         entity_data = self.storages.get(entity_type, {}).get(str(entity_id), None)
         if entity_data:
-            # Assuming User and other classes have a method to create an instance from a dict
-            return entity_type(**entity_data)  # This line assumes you will handle the entity construction appropriately
+            entity_class = self.entity_classes.get(entity_type)
+            if not entity_class:
+                raise ValueError(f"No class found for entity type {entity_type}")
+            return entity_class(**entity_data)
         return None
 
     def update(self, entity):
@@ -58,5 +73,4 @@ class DataManager(IPersistenceManager):
             self.save_to_file(entity_type)
 
     def get_all(self, entity_type):
-        """Retrieve all entities of a specific type."""
         return list(self.storages.get(entity_type, {}).values())
