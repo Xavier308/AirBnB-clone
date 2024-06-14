@@ -12,6 +12,7 @@ AirBnB clone version Holberton School
 - [Layered Architecture](#layered-architecture)
 - [Integration of Flask-RESTx](#integration-of-flask-restx)
 - [Command for initialize App and Pytest](#command-for-initialize-app-and-pytest)
+- [Essential Docker Commands](#essential-docker-commands)
 - [Resources](#resources)
 
 ## Introduction
@@ -22,6 +23,8 @@ Welcome to the HBnB Evolution Project, a clone of AirBnB's API crafted using Pyt
 
 ## Contributing 
 - **Xavier J Cruz** - [@Xavier308](https://github.com/Xavier308)
+- **Sebastian Soto** - [@soto2571](https://github.com/soto2571)
+- **Angel Velazquez** - [@AngelVelazq](https://github.com/AngelVelazq)
 
 # What’s in Part 1?
 
@@ -122,7 +125,7 @@ This project utilizes a layered (n-tier) architecture to separate responsibiliti
 ### Directory Structure Overview:
 
 ```bash
-airbnb_clone/
+HBnB/
 ├── app/                        # Main application codebase
 │   ├── api/                    # API endpoints handling client-server interactions
 │   │   ├── amenity_routes.py   # Routes for amenity-related operations
@@ -283,6 +286,66 @@ Make sure you are in the route directorie of the project
 ```bash
 python -m pytest tests/services/test_name.py
 ```
+
+## Essential Docker Commands
+Building and Running the Docker Container
+
+### Build Image:
+Compile your Dockerfile into a Docker image. This is needed to create the runnable instance of your application.
+
+```bash
+docker build -t your_app .
+```
+### Listing Docker Images
+To see all Docker images stored on your machine, use the following command:
+
+```bash
+docker images
+```
+
+```bash
+docker images | grep airbnb_clone
+```
+
+### Run Container:
+Start the application in a new container, mapping the internal port to one accessible on the host.
+
+```bash
+docker run -d -p 8080:8000 your_app
+```
+
+### Container Management
+### View Running Containers:
+See what containers are currently active.
+
+```bash
+docker ps
+```
+
+### Stop Container:
+Terminate a running container gracefully.
+
+```bash
+docker stop [container_id]
+```
+
+### Remove Container:
+Delete a stopped container to clean up your system.
+
+```bash
+docker rm [container_id]
+```
+
+### Debugging
+### View Logs:
+Check the output from your container, useful for debugging and monitoring the application's behavior.
+```bash
+docker logs [container_id]
+```
+
+### Note
+Replace [container_id] with the actual ID of your container as necessary.
+Run these commands from the directory that includes your Dockerfile, or specify the path appropriately.
 
 ## Resources
 

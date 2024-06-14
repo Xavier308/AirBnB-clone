@@ -1,1 +1,9 @@
-{}
+{
+    "e2f7c8c3-12e7-4e80-928e-68af8df9a833": {
+      "country_id": "e2f7c8c3-12e7-4e80-928e-68af8df9a833",
+      "name": "Exampleland",
+      "created_at": "2024-06-15T12:00:00",
+      "updated_at": "2024-06-15T12:00:00",
+      "cities": []
+    }
+}
