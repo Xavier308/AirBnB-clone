@@ -19,7 +19,7 @@ class CityService:
         city = City(name=name, country=country)
         self.data_manager.save(city)
         return city
-
+   
     def update_city(self, city_id, name):
         city = self.data_manager.get(city_id, City)
         if not city:
