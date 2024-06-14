@@ -23,6 +23,8 @@ Welcome to the HBnB Evolution Project, a clone of AirBnB's API crafted using Pyt
 
 ## Contributing 
 - **Xavier J Cruz** - [@Xavier308](https://github.com/Xavier308)
+- **Sebastian Soto** - [@soto2571](https://github.com/soto2571)
+- **Angel Velazquez** - [@AngelVelazq](https://github.com/AngelVelazq)
 
 # What’s in Part 1?
 
