@@ -1,43 +1,62 @@
 import json
+import os
 from .interface import IPersistenceManager
 
 class DataManager(IPersistenceManager):
-    def __init__(self, filename='mydata.json'):  # Default filename changed to 'mydata.json'
-        self.filename = filename
-        self.storage = self.load_data()
+    def __init__(self):
+        self.files = {
+            'User': 'userdata.json',
+            'City': 'citydata.json',
+            'Country': 'countrydata.json',
+            'Amenity': 'amenitydata.json',
+            'Review': 'reviewdata.json',
+            'Place': 'placedata.json'
+        }
+        self.storages = {key: self.load_data(key) for key in self.files}
 
-    def load_data(self):
+    def load_data(self, entity_type):
+        """Load data from a JSON file corresponding to the entity type."""
+        file_path = self.files[entity_type]
+        if not os.path.exists(file_path):
+            with open(file_path, 'w') as file:
+                json.dump({}, file)
+            return {}
         try:
-            with open(self.filename, 'r') as file:
+            with open(file_path, 'r') as file:
                 return json.load(file)
-        except (FileNotFoundError, json.JSONDecodeError):
-            return {}  # Return an empty dictionary if no data
+        except (FileNotFoundError, json.JSONDecodeError, PermissionError) as e:
+            print(f"Error loading data from {file_path}: {e}")
+            return {}
 
-    def save_to_file(self):
-        with open(self.filename, 'w') as file:
-            json.dump(self.storage, file, indent=4)
+    def save_to_file(self, entity_type):
+        with open(self.files[entity_type], 'w') as file:
+            json.dump(self.storages[entity_type], file, indent=4)
 
-    # This "entity_id = entity.id" was changed to resolve problem
     def save(self, entity):
         entity_type = type(entity).__name__
-        entity_id = entity.user_id  # Use user_id instead of id
-        if entity_type not in self.storage:
-            self.storage[entity_type] = {}
-        self.storage[entity_type][entity_id] = entity.to_dict()
-        self.save_to_file()
+        entity_id = entity.user_id  # Assume all entities have user_id
+        if entity_type not in self.storages:
+            self.storages[entity_type] = {}
+        self.storages[entity_type][entity_id] = entity.to_dict()
+        self.save_to_file(entity_type)
 
-    def get(self, entity_id, entity_class):
-        entity_type = entity_class.__name__
-        entity_data = self.storage.get(entity_type, {}).get(str(entity_id), None)
+    def get(self, entity_id, entity_type):
+        """Retrieve a single entity by ID."""
+        entity_data = self.storages.get(entity_type, {}).get(str(entity_id), None)
         if entity_data:
-            return entity_class(**entity_data)
+            # Assuming User and other classes have a method to create an instance from a dict
+            return entity_type(**entity_data)  # This line assumes you will handle the entity construction appropriately
         return None
 
     def update(self, entity):
-        self.save(entity)  # Reuse save method since it handles replacing existing data
+        self.save(entity)
 
     def delete(self, entity_id, entity_class):
         entity_type = entity_class.__name__
-        if entity_type in self.storage and entity_id in self.storage[entity_type]:
-            del self.storage[entity_type][entity_id]
-            self.save_to_file()
+        if entity_type in self.storages and entity_id in self.storages[entity_type]:
+            del self.storages[entity_type][entity_id]
+            self.save_to_file(entity_type)
+
+    def get_all(self, entity_type):
+        """Retrieve all entities of a specific type."""
+        return list(self.storages.get(entity_type, {}).values())

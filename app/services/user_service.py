@@ -2,24 +2,21 @@ from app.models.user import User
 from app.persistence.data_manager import DataManager
 from email_validator import validate_email, EmailNotValidError
 
-'''
-This file pass 4 test of 4
-'''
-
 class UserService:
     def __init__(self, data_manager):
         self.data_manager = data_manager
 
     def get_all_users(self):
-        # Assume you're retrieving all users stored in a list or dict
-        return list(self.data_manager.storage.values())
+        # Retrieve all users assuming 'User' data is stored under 'User' key
+        return self.data_manager.get_all('User')
 
     def create_user(self, email, first_name, last_name, password):
         # Validate email format
         validate_email(email)
 
         # Ensure email is unique
-        if self.data_manager.get(email, User):
+        existing_user = self.data_manager.get(email, User) # Pass User class instead of 'User' string
+        if existing_user:
             raise ValueError("Email already in use")
 
         # Validate non-empty first and last name
@@ -28,11 +25,11 @@ class UserService:
 
         # Create and save the new user
         new_user = User(email=email, first_name=first_name, last_name=last_name, password=password)
-        self.data_manager.save(new_user)
+        self.data_manager.save(new_user, 'User')
         return new_user
 
     def get_user(self, user_id):
-        user = self.data_manager.get(user_id, User)
+        user = self.data_manager.get(user_id, 'User')
         if not user:
             raise ValueError("User not found")
         return user
@@ -40,14 +37,17 @@ class UserService:
     def update_user(self, user_id, email=None, first_name=None, last_name=None):
         user = self.get_user(user_id)
         if email:
+            validate_email(email)  # Validate new email if it's being changed
             user.email = email
         if first_name:
             user.first_name = first_name
         if last_name:
             user.last_name = last_name
-        self.data_manager.update(user)
+        self.data_manager.update(user, 'User')
         return user
 
     def delete_user(self, user_id):
-        self.get_user(user_id)  # Ensure user exists before attempting to delete
-        self.data_manager.delete(user_id, User)
+        user = self.get_user(user_id)  # Ensure user exists before attempting to delete
+        if not user:
+            raise ValueError("User not found")
+        self.data_manager.delete(user_id, 'User')
