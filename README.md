@@ -21,8 +21,7 @@ Welcome to the HBnB Evolution Project, a clone of AirBnB's API crafted using Pyt
 
 
 ## Contributing 
-- **Xavier J Cruz**
-Documentation provided by Holberton School.
+- **Xavier J Cruz** - [@Xavier308](https://github.com/Xavier308)
 
 # What’s in Part 1?
 
@@ -115,7 +114,7 @@ To ensure consistency across various development environments and in preparation
 The project began with designing a Unified Modeling Language (UML) diagram to plan and visualize the system's structure before coding.
 
 ![UML Diagram](/assets/UML_SIMPLE_DIAGRAM.png)
--[UML Diagram - Lucid tool](https://lucid.app/lucidchart/4e919969-a00b-4245-bc63-417ab657d881/edit?viewport_loc=-1712%2C-924%2C2977%2C1415%2C0_0&invitationId=inv_3d45a7c7-3c8e-48ca-9af6-0359584ea99e)
+[UML Diagram - Lucid tool](https://lucid.app/lucidchart/4e919969-a00b-4245-bc63-417ab657d881/edit?viewport_loc=-1712%2C-924%2C2977%2C1415%2C0_0&invitationId=inv_3d45a7c7-3c8e-48ca-9af6-0359584ea99e)
 
 ## Layered Architecture
 This project utilizes a layered (n-tier) architecture to separate responsibilities, which simplifies management, maintenance, and scalability.
