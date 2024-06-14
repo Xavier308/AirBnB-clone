@@ -25,7 +25,7 @@ class UserService:
 
         # Create and save the new user
         new_user = User(email=email, first_name=first_name, last_name=last_name, password=password)
-        self.data_manager.save(new_user, 'User')
+        self.data_manager.save(new_user)
         return new_user
 
     def get_user(self, user_id):
@@ -43,11 +43,11 @@ class UserService:
             user.first_name = first_name
         if last_name:
             user.last_name = last_name
-        self.data_manager.update(user, 'User')
+        self.data_manager.update(user) # I changed this
         return user
 
     def delete_user(self, user_id):
         user = self.get_user(user_id)  # Ensure user exists before attempting to delete
         if not user:
             raise ValueError("User not found")
-        self.data_manager.delete(user_id, 'User')
+        self.data_manager.delete(user_id, User) # I change this to pass it like class not as a string
