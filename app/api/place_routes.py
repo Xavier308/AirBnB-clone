@@ -1,9 +1,15 @@
 from flask_restx import Namespace, Resource
 from app.services.place_service import PlaceService
+from app.services.city_service import CityService
+from app.services.country_service import CountryService
 from app.persistence.data_manager import DataManager
+
 
 api = Namespace('places', description='Place operations')
 place_service = PlaceService(DataManager())
+country_service = CountryService(DataManager())
+city_service = CityService(DataManager(), country_service)  # Assuming CityService is initialized here if not passed
+
 
 @api.route('/')
 class PlaceList(Resource):
@@ -17,6 +23,14 @@ class PlaceList(Resource):
         if not all(field in data for field in required_fields):
             missing_fields = [field for field in required_fields if field not in data]
             return {'error': f'Missing required fields: {", ".join(missing_fields)}'}, 400
+
+        # Validate the existence of the city
+        try:
+            # This will raise ValueError if the city does not exist
+            city_service.get_city(data['city_id'])
+        except ValueError as e:
+            # Return the error message from the exception
+            return {'error': str(e)}, 404
 
         try:
             place = place_service.create_place(**data)
