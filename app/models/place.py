@@ -21,8 +21,7 @@ class Place:
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
     '''
-    This method would allow you to define what it means for two Place objects
-    to be equal based on their attributes rather than their identities.
+    For testing
     '''
     def __eq__(self, other):
         if not isinstance(other, Place):
